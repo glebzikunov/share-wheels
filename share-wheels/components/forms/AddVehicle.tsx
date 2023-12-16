@@ -123,7 +123,7 @@ function AddVehicle({ userId }: Params) {
                   {field.value ? (
                     <Image
                       src={field.value}
-                      alt="profile photo"
+                      alt="Vehicle Photo"
                       width={250}
                       height={50}
                       priority
@@ -132,9 +132,9 @@ function AddVehicle({ userId }: Params) {
                   ) : (
                     <Image
                       src="/assets/profile.svg"
-                      alt="profile photo"
-                      width={24}
-                      height={24}
+                      alt="Vehicle photo"
+                      width={48}
+                      height={48}
                       className="object-contain"
                     />
                   )}
