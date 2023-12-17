@@ -28,6 +28,7 @@ async function Page({ params }: { params: { id: string } }) {
         description={vehicleInfo.description}
         owner={vehicleOwner}
         isFree={vehicleInfo.isFree}
+        isAvailable={vehicleInfo.isAvailable}
       />
 
       <div className="mt-9">
@@ -43,7 +44,7 @@ async function Page({ params }: { params: { id: string } }) {
                   className="object-contain"
                 />
                 <p className="max-sm:hidden">{tab.label}</p>
-                {tab.label === "Transactions" && (
+                {tab.label === "Comments" && (
                   <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
                     {vehicleInfo?.comments?.length}
                   </p>

@@ -2,6 +2,7 @@ import { formatAmount } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 import RentVehicle from "../forms/RentVehicle"
+import AddToFavourites from "../forms/AddToFavourites"
 
 interface Props {
   vehicleId: string
@@ -14,6 +15,7 @@ interface Props {
   description: string
   owner: string
   isFree: boolean
+  isAvailable: boolean
 }
 const VehicleHeader = ({
   vehicleId,
@@ -26,6 +28,7 @@ const VehicleHeader = ({
   description,
   owner,
   isFree,
+  isAvailable,
 }: Props) => {
   return (
     <div className="flex w-full flex-col justify-start">
@@ -67,9 +70,17 @@ const VehicleHeader = ({
               <p className="text-light-2">Edit</p>
             </div>
           </Link>
-        ) : (
-          <RentVehicle />
-        )}
+        ) : isFree && isAvailable ? (
+          <>
+            <div className="flex flex-col self-start max-sm:flex-row max-sm:self-end gap-3">
+              <RentVehicle />
+              <AddToFavourites
+                userId={authUserId.toString()}
+                vehicleId={vehicleId}
+              />
+            </div>
+          </>
+        ) : null}
       </div>
 
       <div className="mt-12 h-0.5 w-full bg-dark-2"></div>

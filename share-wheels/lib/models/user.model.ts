@@ -6,6 +6,12 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   image: String,
   bio: String,
+  favourites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vehicle",
+    },
+  ],
   vehicles: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -151,3 +151,74 @@ export async function fetchVehicleDetails(id: string) {
     throw new Error(`Failed to fetch vehicle details: ${error.message}`)
   }
 }
+
+export async function addVehicleToFavourites(userId: string, id: string) {
+  try {
+    connectToDb()
+
+    const vehicle = await Vehicle.findById(id)
+    const user = await User.findById(userId).populate({
+      path: "favourites",
+      model: Vehicle,
+    })
+
+    if (
+      user.favourites.some(
+        (fav: any) => fav._id.toString() === vehicle._id.toString()
+      )
+    ) {
+      throw new Error("You already have this vehicle in favourites")
+    }
+
+    await User.findByIdAndUpdate(userId, {
+      $push: { favourites: vehicle._id },
+    })
+
+    return vehicle
+  } catch (error: any) {
+    return {
+      error: `Error adding vehicle into favourites: ${error.message}`,
+    }
+  }
+}
+
+export async function deleteVehicleFromFavourites(
+  userId: string,
+  id: string,
+  path: string
+) {
+  try {
+    connectToDb()
+
+    const vehicle = await Vehicle.findById(id)
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: { favourites: vehicle._id },
+    })
+
+    revalidatePath(path)
+  } catch (error: any) {
+    return {
+      error: `Error deleting vehicle from favourites: ${error.message}`,
+    }
+  }
+}
+
+export async function fetchFavouritesVehicles(userId: string) {
+  try {
+    connectToDb()
+
+    //Find current user by clerk id
+    const user = await User.findOne({ id: userId }).populate({
+      path: "favourites",
+      model: Vehicle,
+    })
+
+    //Find all favourite vehicles related to user
+    const vehicles = user.favourites
+
+    return vehicles
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user favourite vehicles: ${error.message}`)
+  }
+}

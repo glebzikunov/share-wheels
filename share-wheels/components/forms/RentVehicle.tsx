@@ -26,7 +26,7 @@ function RentVehicle() {
     <Button
       onClick={handleClick}
       size="sm"
-      className="vehicleAccount-card_btn self-start max-sm:mt-5 max-sm:self-end"
+      className="vehicleAccount-card_btn bg-primary-500 self-start max-sm:mt-5 max-sm:self-end"
     >
       Rent
     </Button>
