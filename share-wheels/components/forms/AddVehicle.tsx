@@ -169,10 +169,7 @@ function AddVehicle({ userId }: Params) {
             render={({ field }) => (
               <FormItem className="flex flex-col w-full gap-3">
                 <FormLabel className="text-base-semibold text-light-2">
-                  Vehicle Mark{" "}
-                  {location.coordinates
-                    ? `lat: ${location.coordinates.lat} lng: ${location.coordinates.lng}`
-                    : "Refresh the page and allow location"}
+                  Vehicle Mark
                 </FormLabel>
                 <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
                   <Input type="text" {...field} />
