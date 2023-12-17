@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { connectToDb } from "../mongoose"
 import User from "../models/user.model"
 import Vehicle from "../models/vehicle.model"
+import { FilterQuery, SortOrder } from "mongoose"
 
 interface Params {
   mark: string
@@ -116,6 +117,47 @@ export async function updateVehicle({
     return {
       error: `Error adding vahicle: ${error.message}`,
     }
+  }
+}
+
+export async function fetchVehicles({
+  userId,
+  searchString = "",
+  sortBy = "desc",
+}: {
+  userId: string
+  searchString?: string
+  sortBy?: SortOrder
+}) {
+  try {
+    if (searchString.trim() === "") {
+      return []
+    }
+
+    connectToDb()
+
+    // Create a case-insensitive regular expression for the provided search string.
+    const regex = new RegExp(searchString, "i")
+
+    // Create an initial query object to filter vehicles.
+    const query: FilterQuery<typeof Vehicle> = {}
+
+    // If the search string is not empty, add the $or operator to match either username or name fields.
+    query.$or = [{ mark: { $regex: regex } }, { model: { $regex: regex } }]
+
+    // Define the sort options for the fetched vehicles based on createdAt field and sort order.
+    const sortOptions = { createdAt: sortBy }
+
+    const vehicleQuery = Vehicle.find(query)
+      .select("mark model image latitude longitude rentalAmount")
+      .sort(sortOptions)
+
+    const vehicles = await vehicleQuery.exec()
+
+    return vehicles
+  } catch (error) {
+    console.error("Error fetching vehicles:", error)
+    throw error
   }
 }
 

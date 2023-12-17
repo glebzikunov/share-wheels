@@ -1,10 +1,5 @@
 export const sidebarLinks = [
   {
-    imgURL: "/assets/home.svg",
-    route: "/",
-    label: "Home",
-  },
-  {
     imgURL: "/assets/search.svg",
     route: "/search",
     label: "Search",
@@ -49,5 +44,95 @@ export const vehicleTabs = [
     value: "comments",
     label: "Comments",
     icon: "/assets/comments.svg",
+  },
+]
+
+export const mapStyles = [
+  {
+    featureType: "all",
+    elementType: "all",
+    stylers: [
+      {
+        invert_lightness: true,
+      },
+      {
+        saturation: 20,
+      },
+      {
+        lightness: 50,
+      },
+      {
+        gamma: 0.4,
+      },
+      {
+        hue: "#00ffee",
+      },
+    ],
+  },
+  {
+    featureType: "all",
+    elementType: "geometry",
+    stylers: [
+      {
+        visibility: "simplified",
+      },
+    ],
+  },
+  {
+    featureType: "all",
+    elementType: "labels",
+    stylers: [
+      {
+        visibility: "on",
+      },
+    ],
+  },
+  {
+    featureType: "administrative",
+    elementType: "all",
+    stylers: [
+      {
+        color: "#ffffff",
+      },
+      {
+        visibility: "simplified",
+      },
+    ],
+  },
+  {
+    featureType: "administrative.land_parcel",
+    elementType: "geometry.stroke",
+    stylers: [
+      {
+        visibility: "simplified",
+      },
+    ],
+  },
+  {
+    featureType: "landscape",
+    elementType: "all",
+    stylers: [
+      {
+        color: "#405769",
+      },
+    ],
+  },
+  {
+    featureType: "water",
+    elementType: "geometry.fill",
+    stylers: [
+      {
+        color: "#232f3a",
+      },
+    ],
+  },
+  {
+    featureType: "poi",
+    elementType: "labels.icon",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
   },
 ]
