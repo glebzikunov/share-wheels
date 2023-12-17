@@ -11,8 +11,8 @@ export const sidebarLinks = [
   },
   {
     imgURL: "/assets/heart.svg",
-    route: "/favourite",
-    label: "Favourite",
+    route: "/favourites",
+    label: "Favourites",
   },
   {
     imgURL: "/assets/add-vehicle.svg",
@@ -41,5 +41,13 @@ export const profileTabs = [
     value: "rentalHistory",
     label: "History",
     icon: "/assets/rental-history.svg",
+  },
+]
+
+export const vehicleTabs = [
+  {
+    value: "comments",
+    label: "Comments",
+    icon: "/assets/comments.svg",
   },
 ]

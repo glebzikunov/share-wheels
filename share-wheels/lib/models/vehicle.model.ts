@@ -9,16 +9,22 @@ const vehicleSchema = new mongoose.Schema({
   description: String,
   isFree: { type: Boolean, default: true },
   isAvailable: Boolean,
-  owner: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+  createdAt: { type: Date, default: Date.now },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+
   rentals: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Rental",
+    },
+  ],
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
     },
   ],
 })

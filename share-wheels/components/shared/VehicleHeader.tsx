@@ -1,0 +1,80 @@
+import { formatAmount } from "@/lib/utils"
+import Image from "next/image"
+import Link from "next/link"
+import RentVehicle from "../forms/RentVehicle"
+
+interface Props {
+  vehicleId: string
+  authUserId: string
+  mark: string
+  model: string
+  number: string
+  imgUrl: string
+  rentalAmount: number
+  description: string
+  owner: string
+  isFree: boolean
+}
+const VehicleHeader = ({
+  vehicleId,
+  authUserId,
+  mark,
+  model,
+  number,
+  imgUrl,
+  rentalAmount,
+  description,
+  owner,
+  isFree,
+}: Props) => {
+  return (
+    <div className="flex w-full flex-col justify-start">
+      <div className="flex items-center justify-between max-sm:flex-col max-sm:items-start">
+        <div className="flex max-lg:flex-col gap-3 max-sm:w-full">
+          <div className="relative object-cover">
+            <Image
+              src={imgUrl}
+              alt="Vehicle image"
+              width={300}
+              height={50}
+              className="rounded-xl object-cover shadow-2xl max-lg:w-full"
+            />
+          </div>
+          <div className="flex-1">
+            <h2 className="text-left text-heading3-bold text-light-1">
+              {mark}
+            </h2>
+            <p className="mt-2 text-base-medium text-gray-1">{model}</p>
+            <p className="mt-2 text-base-medium text-gray-1">{number}</p>
+            <p className="mt-2 text-base-medium text-gray-1">
+              {formatAmount(rentalAmount)} per minute
+            </p>
+            <p className="mt-6 text-base-regular text-light-2">{description}</p>
+          </div>
+        </div>
+        {owner.toString() === authUserId.toString() ? (
+          <Link
+            href={`/vehicles/edit/${vehicleId}`}
+            className="self-start max-sm:mt-3 max-sm:self-end"
+          >
+            <div className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2">
+              <Image
+                src="/assets/edit.svg"
+                alt="Edit Vehicle"
+                width={16}
+                height={16}
+              />
+              <p className="text-light-2">Edit</p>
+            </div>
+          </Link>
+        ) : (
+          <RentVehicle />
+        )}
+      </div>
+
+      <div className="mt-12 h-0.5 w-full bg-dark-2"></div>
+    </div>
+  )
+}
+
+export default VehicleHeader
