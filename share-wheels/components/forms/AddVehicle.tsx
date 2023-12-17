@@ -22,6 +22,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { VehicleValidation } from "@/lib/validations/vehicle"
 import Image from "next/image"
 import { addVehicle } from "@/lib/actions/vehicle.actions"
+import useGeolocation from "@/hooks/useGeolocation"
 
 interface Params {
   userId: string
@@ -30,6 +31,8 @@ interface Params {
 function AddVehicle({ userId }: Params) {
   const [files, setFiles] = useState<File[]>([])
   const { startUpload } = useUploadThing("media")
+  const location = useGeolocation()
+
   const router = useRouter()
   const pathname = usePathname()
 
@@ -76,33 +79,39 @@ function AddVehicle({ userId }: Params) {
     const addingComfirmed = confirm("Are you sure to add vehicle?")
 
     if (addingComfirmed) {
-      const blob = values.vehicle_photo
-
-      const hasImagedChanged = isBase64Image(blob)
-      if (hasImagedChanged) {
-        const imgRes = await startUpload(files)
-
-        if (imgRes && imgRes[0].fileUrl) {
-          values.vehicle_photo = imgRes[0].fileUrl
-        }
-      }
-
-      const result = await addVehicle({
-        mark: values.mark,
-        model: values.model,
-        vehicleNumber: values.vehicleNumber,
-        rentalAmount: values.rentalAmount,
-        image: values.vehicle_photo,
-        isAvailable: values.isAvailable,
-        description: values.description,
-        ownerId: userId,
-        path: pathname,
-      })
-
-      if (result?.error) {
-        alert(result.error)
+      if (location.error === "true") {
+        alert("Enable Navigation and reload the page to add your vehicle!")
       } else {
-        router.push("/")
+        const blob = values.vehicle_photo
+
+        const hasImagedChanged = isBase64Image(blob)
+        if (hasImagedChanged) {
+          const imgRes = await startUpload(files)
+
+          if (imgRes && imgRes[0].fileUrl) {
+            values.vehicle_photo = imgRes[0].fileUrl
+          }
+        }
+
+        const result = await addVehicle({
+          mark: values.mark,
+          model: values.model,
+          vehicleNumber: values.vehicleNumber,
+          rentalAmount: values.rentalAmount,
+          image: values.vehicle_photo,
+          isAvailable: values.isAvailable,
+          description: values.description,
+          latitude: location.coordinates.lat,
+          longitude: location.coordinates.lng,
+          ownerId: userId,
+          path: pathname,
+        })
+
+        if (result?.error) {
+          alert(result.error)
+        } else {
+          router.push("/")
+        }
       }
     }
   }
@@ -160,7 +169,10 @@ function AddVehicle({ userId }: Params) {
             render={({ field }) => (
               <FormItem className="flex flex-col w-full gap-3">
                 <FormLabel className="text-base-semibold text-light-2">
-                  Vehicle Mark
+                  Vehicle Mark{" "}
+                  {location.coordinates
+                    ? `lat: ${location.coordinates.lat} lng: ${location.coordinates.lng}`
+                    : "Refresh the page and allow location"}
                 </FormLabel>
                 <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
                   <Input type="text" {...field} />

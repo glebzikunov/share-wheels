@@ -13,7 +13,7 @@ async function Page({ params }: { params: { id: string } }) {
 
   const userInfo = await fetchUser(user.id)
   const vehicleInfo = await fetchVehicleDetails(params.id)
-  const vehicleOwner = vehicleInfo.owner[0]._id
+  const vehicleOwner = vehicleInfo.owner._id
 
   return (
     <section>

@@ -10,6 +10,8 @@ const vehicleSchema = new mongoose.Schema({
   isFree: { type: Boolean, default: true },
   isAvailable: Boolean,
   createdAt: { type: Date, default: Date.now },
+  latitude: { type: String, required: true },
+  longitude: { type: String, required: true },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

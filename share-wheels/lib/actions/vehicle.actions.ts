@@ -13,6 +13,8 @@ interface Params {
   image: string
   isAvailable: string
   description: string
+  latitude: number
+  longitude: number
   ownerId: string
   path: string
 }
@@ -25,6 +27,8 @@ export async function addVehicle({
   image,
   isAvailable,
   description,
+  latitude,
+  longitude,
   ownerId,
   path,
 }: Params) {
@@ -46,6 +50,8 @@ export async function addVehicle({
       image: image,
       description: description,
       isAvailable: isAvailableForRenting,
+      latitude: latitude,
+      longitude: longitude,
       owner: ownerId,
     })
 
