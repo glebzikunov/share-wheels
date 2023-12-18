@@ -1,10 +1,11 @@
 import Image from "next/image"
 import { currentUser } from "@clerk/nextjs"
-import { vehicleTabs } from "@/constants"
 import VehicleHeader from "@/components/shared/VehicleHeader"
-import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs"
 import { fetchUser } from "@/lib/actions/user.actions"
 import { fetchVehicleDetails } from "@/lib/actions/vehicle.actions"
+import Comment from "@/components/forms/Comment"
+import { fetchVehicleComments } from "@/lib/actions/comment.actions"
+import CommentCard from "@/components/cards/CommentCard"
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser()
@@ -14,6 +15,8 @@ async function Page({ params }: { params: { id: string } }) {
   const userInfo = await fetchUser(user.id)
   const vehicleInfo = await fetchVehicleDetails(params.id)
   const vehicleOwner = vehicleInfo.owner._id
+  const vehicleComments = await fetchVehicleComments(params.id)
+  console.log(vehicleComments)
 
   return (
     <section>
@@ -31,36 +34,23 @@ async function Page({ params }: { params: { id: string } }) {
         isAvailable={vehicleInfo.isAvailable}
       />
 
-      <div className="mt-9">
-        <Tabs defaultValue="comments" className="w-full">
-          <TabsList className="tab">
-            {vehicleTabs.map((tab) => (
-              <TabsTrigger key={tab.label} value={tab.value} className="tab">
-                <Image
-                  src={tab.icon}
-                  alt={tab.label}
-                  width={24}
-                  height={24}
-                  className="object-contain"
-                />
-                <p className="max-sm:hidden">{tab.label}</p>
-                {tab.label === "Comments" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                    {vehicleInfo?.comments?.length}
-                  </p>
-                )}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+      <div className="mt-7">
+        <Comment
+          vehicleId={params.id}
+          currentUserImage={userInfo.image}
+          currentUserId={JSON.stringify(userInfo._id)}
+        />
+      </div>
 
-          <TabsContent value="comments" className="w-full text-light-1">
-            {/* <CommentsTab
-              currentUserId={user.id}
-              accountId={sharedAccountDetails._id}
-              accountType="SharedAccount"
-            /> */}
-          </TabsContent>
-        </Tabs>
+      <div className="mt-10">
+        {vehicleComments.map((comment: any) => (
+          <CommentCard
+            key={comment._id}
+            content={comment.text}
+            author={comment.author}
+            createdAt={comment.createdAt}
+          />
+        ))}
       </div>
     </section>
   )

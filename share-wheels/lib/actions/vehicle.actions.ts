@@ -63,7 +63,7 @@ export async function addVehicle({
     revalidatePath(path)
   } catch (error: any) {
     return {
-      error: `Error adding vahicle: ${error.message}`,
+      error: `Error adding vehicle: ${error.message}`,
     }
   }
 }

@@ -83,10 +83,17 @@ const VehicleHeader = ({
               />
             </div>
           </>
-        ) : null}
+        ) : (
+          <>
+            <div className="flex flex-col self-start max-sm:flex-row max-sm:self-end gap-3">
+              <AddToFavourites
+                userId={authUserId.toString()}
+                vehicleId={vehicleId}
+              />
+            </div>
+          </>
+        )}
       </div>
-
-      <div className="mt-12 h-0.5 w-full bg-dark-2"></div>
     </div>
   )
 }
