@@ -40,7 +40,7 @@ function Map({ data }: Params) {
       // map options
       const mapOptions: google.maps.MapOptions = {
         center: location.error === "true" ? position : location.coordinates,
-        zoom: 16,
+        zoom: 15,
         styles: mapStyles,
       }
 

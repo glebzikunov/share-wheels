@@ -73,7 +73,10 @@ const VehicleHeader = ({
         ) : isFree && isAvailable ? (
           <>
             <div className="flex flex-col self-start max-sm:flex-row max-sm:self-end gap-3">
-              <RentVehicle />
+              <RentVehicle
+                rentingVehicle={vehicleId}
+                rentalId={authUserId.toString()}
+              />
               <AddToFavourites
                 userId={authUserId.toString()}
                 vehicleId={vehicleId}

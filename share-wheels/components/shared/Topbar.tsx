@@ -5,7 +5,7 @@ import { SignOutButton, SignedIn } from "@clerk/nextjs"
 function Topbar() {
   return (
     <nav className="topbar min-h-[70px]">
-      <Link href="/" className="flex item-center gap-4">
+      <Link href="/search" className="flex item-center gap-4">
         <Image
           src="/assets/share-wheels.png"
           alt="logo"

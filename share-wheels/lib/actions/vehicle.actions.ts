@@ -121,7 +121,6 @@ export async function updateVehicle({
 }
 
 export async function fetchVehicles({
-  userId,
   searchString = "",
   sortBy = "desc",
 }: {
@@ -144,7 +143,7 @@ export async function fetchVehicles({
 
     // If the search string is not empty, add the $or operator to match either username or name fields.
     query.$or = [{ mark: { $regex: regex } }, { model: { $regex: regex } }]
-
+    query.isFree = true
     // Define the sort options for the fetched vehicles based on createdAt field and sort order.
     const sortOptions = { createdAt: sortBy }
 

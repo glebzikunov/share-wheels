@@ -1,23 +1,32 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "../ui/button"
+import { addRental } from "@/lib/actions/rental.actions"
 
-function RentVehicle() {
+interface Params {
+  rentingVehicle: string
+  rentalId: string
+}
+
+function RentVehicle({ rentingVehicle, rentalId }: Params) {
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleClick = async () => {
     const rentingComfirmed = confirm("Are you sure to rent this vehicle?")
 
     if (rentingComfirmed) {
-      // TODO: rent logic
-      const result = {}
-      console.log("Renting started")
+      const result = await addRental({
+        vehicleId: rentingVehicle,
+        rentalId: rentalId,
+        path: pathname,
+      })
 
       if (result?.error) {
         alert(result.error)
       } else {
-        router.push("/")
+        router.push("/search")
       }
     }
   }
