@@ -12,6 +12,7 @@ async function Page() {
   if (!userInfo?.onboarded) redirect("/onboarding")
 
   const result = await fetchUserVehicles(user.id)
+  console.log(result)
 
   return (
     <>
@@ -30,6 +31,8 @@ async function Page() {
                 model={vehicle.model}
                 imgUrl={vehicle.image}
                 number={vehicle.number}
+                authUserId={userInfo._id}
+                type="View"
               />
             ))}
           </>

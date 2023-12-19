@@ -69,11 +69,13 @@ export async function addVehicle({
 }
 
 interface UpdatedParams {
+  vehicleId: string
   mark: string
   model: string
   vehicleNumber: string
   rentalAmount: number
   image: string
+  isFree: string
   isAvailable: string
   description: string
   ownerId: string
@@ -81,11 +83,13 @@ interface UpdatedParams {
 }
 
 export async function updateVehicle({
+  vehicleId,
   mark,
   model,
   vehicleNumber,
   rentalAmount,
   image,
+  isFree,
   isAvailable,
   description,
   ownerId,
@@ -94,10 +98,14 @@ export async function updateVehicle({
   try {
     connectToDb()
 
+    if (isFree === "false" && isAvailable === "false") {
+      throw new Error("You can't update status while vehicle is renting!")
+    }
+
     const vehicle = await Vehicle.findOne({ owner: ownerId })
 
-    await Vehicle.findOneAndUpdate(
-      { owner: ownerId },
+    await Vehicle.findByIdAndUpdate(
+      vehicleId,
       {
         mark: mark,
         model: model,
@@ -115,7 +123,7 @@ export async function updateVehicle({
     }
   } catch (error: any) {
     return {
-      error: `Error adding vahicle: ${error.message}`,
+      error: `Error updating vehicle: ${error.message}`,
     }
   }
 }

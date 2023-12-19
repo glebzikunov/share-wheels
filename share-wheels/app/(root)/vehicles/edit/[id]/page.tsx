@@ -13,16 +13,18 @@ async function Page({ params }: { params: { id: string } }) {
   const vehicleInfo = await fetchVehicleDetails(params.id)
 
   if (!userInfo?.onboarded) redirect("/onboarding")
-  if (userInfo._id.toString() !== vehicleInfo.owner[0]._id.toString())
-    redirect("/")
+  if (userInfo._id.toString() !== vehicleInfo.owner._id.toString())
+    redirect(`/vehicles/${params.id}`)
 
   const vehicleData = {
+    vehicleId: vehicleInfo._id,
     mark: vehicleInfo.mark,
     model: vehicleInfo.model,
     number: vehicleInfo.number,
     rentalAmount: vehicleInfo.rentalAmount,
     image: vehicleInfo.image,
-    isAvailable: vehicleInfo.isAvailable.toString() ? "true" : "false",
+    isFree: vehicleInfo.isFree ? "true" : "false",
+    isAvailable: vehicleInfo.isAvailable ? "true" : "false",
     description: vehicleInfo ? vehicleInfo?.description : "",
     owner: userInfo._id,
   }

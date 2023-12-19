@@ -25,11 +25,13 @@ import { updateVehicle } from "@/lib/actions/vehicle.actions"
 
 interface Params {
   vehicle: {
+    vehicleId: string
     mark: string
     model: string
     number: string
     rentalAmount: number
     image: string
+    isFree: string
     isAvailable: string
     description: string
     owner: string
@@ -98,11 +100,13 @@ function EditVehicle({ vehicle, btnTitle }: Params) {
       }
 
       const result = await updateVehicle({
+        vehicleId: vehicle.vehicleId,
         mark: values.mark,
         model: values.model,
         vehicleNumber: values.vehicleNumber,
         rentalAmount: values.rentalAmount,
         image: values.vehicle_photo,
+        isFree: vehicle.isFree,
         isAvailable: values.isAvailable,
         description: values.description,
         ownerId: vehicle.owner,
