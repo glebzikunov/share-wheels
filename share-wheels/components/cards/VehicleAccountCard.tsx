@@ -32,6 +32,8 @@ function VehicleAccountCard({
             alt="Vehicle Logo"
             width={250}
             height={50}
+            placeholder="blur"
+            blurDataURL="/assets/image-loading.jpg"
             className="w-full rounded-xl object-cover"
           />
         </Link>

@@ -41,6 +41,8 @@ const VehicleHeader = ({
               alt="Vehicle image"
               width={300}
               height={50}
+              placeholder="blur"
+              blurDataURL="/assets/image-loading.jpg"
               className="rounded-xl object-cover shadow-2xl max-lg:w-full"
             />
           </div>

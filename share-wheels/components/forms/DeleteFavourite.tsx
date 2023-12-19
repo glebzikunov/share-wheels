@@ -25,8 +25,6 @@ function DeleteFavourite({ userId, vehicleId }: Params) {
 
       if (result?.error) {
         alert(result.error)
-      } else {
-        router.push("/")
       }
     }
   }
