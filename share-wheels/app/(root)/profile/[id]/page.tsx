@@ -5,6 +5,8 @@ import { fetchUser } from "@/lib/actions/user.actions"
 import { currentUser } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 import Image from "next/image"
+import RentalsTab from "@/components/shared/RentalsTab"
+import { fetchPreviousRentals } from "@/lib/actions/rental.actions"
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser()
@@ -14,6 +16,8 @@ async function Page({ params }: { params: { id: string } }) {
   const userInfo = await fetchUser(params.id)
 
   if (!userInfo?.onboarded) redirect("/onboarding")
+
+  const previousRentals = await fetchPreviousRentals(params.id)
 
   return (
     <section>
@@ -41,19 +45,21 @@ async function Page({ params }: { params: { id: string } }) {
                   <p className="max-sm:hidden">{tab.label}</p>
                   {tab.label === "History" && (
                     <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                      0
+                      {previousRentals?.length}
                     </p>
                   )}
                 </TabsTrigger>
               ))}
             </TabsList>
-
             <TabsContent value="rentals" className="w-full text-light-1">
-              {/* TODO: fetch current user rental */}
+              <RentalsTab accountId={user.id} type="Active" />
             </TabsContent>
-            <TabsContent value="rentalHistory" className="w-full text-light-1">
-              <section className="mt-9 flex flex-col gap-10">
-                {/* TODO: fetch user rental history */}
+            <TabsContent
+              value="rentalHistory"
+              className="mt-0 w-full text-light-1"
+            >
+              <section className="flex flex-col gap-10">
+                <RentalsTab accountId={user.id} type="History" />
               </section>
             </TabsContent>
           </Tabs>

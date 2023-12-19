@@ -9,8 +9,6 @@ interface Props {
   username: string
   imgUrl: string
   bio: string
-  inSharedAccount: boolean
-  sharedBalance: number
 }
 const ProfileHeader = ({
   accountId,

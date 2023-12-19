@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import RentVehicle from "../forms/RentVehicle"
 import AddToFavourites from "../forms/AddToFavourites"
+import PayForRent from "../forms/PayForRent"
 
 interface Props {
   vehicleId: string
@@ -86,6 +87,7 @@ const VehicleHeader = ({
         ) : (
           <>
             <div className="flex flex-col self-start max-sm:flex-row max-sm:self-end gap-3">
+              <PayForRent />
               <AddToFavourites
                 userId={authUserId.toString()}
                 vehicleId={vehicleId}

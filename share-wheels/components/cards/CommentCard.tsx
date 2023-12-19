@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { formatDateString, formatAmount } from "@/lib/utils"
+import { formatDateString } from "@/lib/utils"
 
 interface Props {
   content: string | ""

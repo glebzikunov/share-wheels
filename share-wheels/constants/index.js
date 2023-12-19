@@ -136,3 +136,18 @@ export const mapStyles = [
     ],
   },
 ]
+
+export const paymentStyle = {
+  iconColor: "#3DB39E",
+  color: "#fff",
+  fontWeight: "500",
+  fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+  fontSize: "16px",
+  fontSmoothing: "antialiased",
+  ":-webkit-autofill": {
+    color: "#fff",
+  },
+  "::placeholder": {
+    color: "#3DB39E",
+  },
+}

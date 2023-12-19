@@ -16,7 +16,6 @@ async function Page({ params }: { params: { id: string } }) {
   const vehicleInfo = await fetchVehicleDetails(params.id)
   const vehicleOwner = vehicleInfo.owner._id
   const vehicleComments = await fetchVehicleComments(params.id)
-  console.log(vehicleComments)
 
   return (
     <section>
