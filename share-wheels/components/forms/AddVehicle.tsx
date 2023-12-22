@@ -110,7 +110,7 @@ function AddVehicle({ userId }: Params) {
         if (result?.error) {
           alert(result.error)
         } else {
-          router.push("/")
+          router.push("/search")
         }
       }
     }

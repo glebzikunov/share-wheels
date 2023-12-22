@@ -12,7 +12,6 @@ async function Page() {
   if (!userInfo?.onboarded) redirect("/onboarding")
 
   const result = await fetchUserVehicles(user.id)
-  console.log(result)
 
   return (
     <>

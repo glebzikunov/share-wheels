@@ -130,7 +130,9 @@ export async function fetchRentalInfo(userId: string) {
 export async function updateRentalStatus(
   userId: string,
   endTime: number,
-  totalAmount: number
+  totalAmount: number,
+  lat: number,
+  lng: number
 ) {
   try {
     connectToDb()
@@ -144,6 +146,8 @@ export async function updateRentalStatus(
 
     await Vehicle.findByIdAndUpdate(rentalInfo.vehicle._id, {
       isFree: true,
+      latitude: lat,
+      longitude: lng,
     })
 
     await Rental.findByIdAndUpdate(rentalInfo._id, {

@@ -13,9 +13,13 @@ interface Params {
     time: number
     totalAmount: number
   }
+  userLocation: {
+    lat: number
+    lng: number
+  }
 }
 
-function PaymentForm({ userId, paymentInfo }: Params) {
+function PaymentForm({ userId, paymentInfo, userLocation }: Params) {
   const router = useRouter()
   const stripe = useStripe()
   const elements = useElements()
@@ -40,7 +44,9 @@ function PaymentForm({ userId, paymentInfo }: Params) {
         await updateRentalStatus(
           userId,
           paymentInfo.time,
-          paymentInfo.totalAmount
+          paymentInfo.totalAmount,
+          userLocation.lat,
+          userLocation.lng
         )
 
         router.push("/search")
